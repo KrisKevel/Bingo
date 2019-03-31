@@ -2,8 +2,18 @@ import java.util.Arrays;
 
 public class Mängija {
 
-    String nimi;
-    int[][] pilet;
+    private String nimi;
+    private int[][] pilet;
+    private String[][] piletKontrollitud = new String[5][5];
+    private int[] mängijaVõidud = {0,0,0};
+
+    public int[] getMängijaVõidud() {
+        return mängijaVõidud;
+    }
+
+    public void setMängijaVõidud(int[] mängijaVõidud) {
+        this.mängijaVõidud = mängijaVõidud;
+    }
 
     Mängija(String nimi, int[][] pilet){
         this.nimi = nimi;
@@ -20,6 +30,14 @@ public class Mängija {
 
     public int[][] getPilet() {
         return pilet;
+    }
+
+    public String[][] getPiletKontrollitud() {
+        return piletKontrollitud;
+    }
+
+    public void setPiletKontrollitud(String[][] piletKontrollitud) {
+        this.piletKontrollitud = piletKontrollitud;
     }
 
     public void setPilet(int[][] piletiN) {
