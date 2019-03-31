@@ -5,7 +5,13 @@ public class Mängija {
     private String nimi;
     private int[][] pilet;
     private String[][] piletKontrollitud = new String[5][5];
-    private int[] mängijaVõidud = {0,0,0};
+    private int[] mängijaVõidud = {0, 0, 0};
+    private int punktid = 0;
+
+    Mängija(String nimi, int[][] pilet) {
+        this.nimi = nimi;
+        this.pilet = pilet;
+    }
 
     public int[] getMängijaVõidud() {
         return mängijaVõidud;
@@ -13,11 +19,6 @@ public class Mängija {
 
     public void setMängijaVõidud(int[] mängijaVõidud) {
         this.mängijaVõidud = mängijaVõidud;
-    }
-
-    Mängija(String nimi, int[][] pilet){
-        this.nimi = nimi;
-        this.pilet = pilet;
     }
 
     public String getNimi() {
@@ -40,19 +41,15 @@ public class Mängija {
         this.piletKontrollitud = piletKontrollitud;
     }
 
-    public void setPilet(int[][] piletiN) {
-        this.pilet = piletiN;
-    }
+    public int getPunktid() { return punktid; }
 
-    //mängija võiks kontrollida oma piletit mängu ajal
-
-
+    public void setPunktid(int punktid) { this.punktid = punktid; }
 
     @Override
     public String toString() {
         String piletSõnena = "\n";
 
-        for(int[] rida: pilet){
+        for (int[] rida : pilet) {
             piletSõnena += Arrays.toString(rida) + "\n";
         }
 
