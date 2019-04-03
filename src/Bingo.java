@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Bingo {
-    private static int võitudeArvMängus = 0;
     private static boolean võitja = false;
 
     public static void main(String[] args) throws InterruptedException {
@@ -164,11 +163,20 @@ public class Bingo {
                     else{
                         System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
 
-                        if(m.getPunktid() >= 50)
-                            m.setPunktid(m.getPunktid() - 50);
+                        juhuArv = Math.random()*10;
+                        juhuArvIntina = (int) juhuArv;
+                        if(juhuArvIntina==1){
+                            System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas, sest mängu läbiviija ei märganud seda" +
+                                    "ja punkte maha ei võetud.");
+                        }
 
-                        else
-                            m.setPunktid(0);
+                        else{
+                            if(m.getPunktid() >= 50)
+                                m.setPunktid(m.getPunktid() - 50);
+
+                            else
+                                m.setPunktid(0);
+                        }
                     }
                 }
 
