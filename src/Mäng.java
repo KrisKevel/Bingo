@@ -23,12 +23,6 @@ public class Mäng {
             arvud.add(i);
         }
         Collections.shuffle(arvud);
-        /*for(int i = 0;i<75 && !võitja;i++){
-            arveLoositud +=1;
-            System.out.println("Loositi arv: "+arvud.get(i));
-            System.out.println("Järgmine arv genereeritakse 5 sekundi pärast.");
-            Thread.sleep(5000);
-        }*/
     }
 
     public static int getArveLoositud() {

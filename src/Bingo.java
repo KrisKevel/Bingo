@@ -122,13 +122,22 @@ public class Bingo {
 
                 if (võite == 0) {
                     //midagi sellist et kaotab punkte vms kui arvab et bingo aga tglt mitte.
-                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
+                    // tõin randomi sisse , 1/10 chance, et ei kaota punkte kui kuulutab bingo
+                    double juhuArv = (double)Math.random()*10;
+                    int juhuArvIntina = (int) juhuArv;
+                    if(juhuArvIntina==1){
+                        System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas, sest mängu läbiviija ei märganud seda" +
+                                "ja punkte maha ei võetud.");
+                    }
+                    else{
+                        System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
 
-                    if(m.getPunktid() >= 10)
-                        m.setPunktid(m.getPunktid() - 10);
+                        if(m.getPunktid() >= 10)
+                            m.setPunktid(m.getPunktid() - 10);
 
-                    else
-                        m.setPunktid(0);
+                        else
+                            m.setPunktid(0);
+                    }
                 }
 
                 System.out.println();
@@ -145,13 +154,22 @@ public class Bingo {
 
                 } else {
                     //midagi sellist et kaotab punkte vms kui arvab et bingo aga tglt mitte.
-                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
+                    // tõin randomi sisse , 1/10 chance, et ei kaota punkte kui kuulutab bingo
+                    double juhuArv = (double)Math.random()*10;
+                    int juhuArvIntina = (int) juhuArv;
+                    if(juhuArvIntina==1){
+                        System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas, sest mängu läbiviija ei märganud seda" +
+                                "ja punkte maha ei võetud.");
+                    }
+                    else{
+                        System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
 
-                    if(m.getPunktid() >= 50)
-                        m.setPunktid(m.getPunktid() - 50);
+                        if(m.getPunktid() >= 50)
+                            m.setPunktid(m.getPunktid() - 50);
 
-                    else
-                        m.setPunktid(0);
+                        else
+                            m.setPunktid(0);
+                    }
                 }
 
                 System.out.println();
