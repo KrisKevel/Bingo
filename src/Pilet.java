@@ -14,7 +14,7 @@ public class Pilet {
 
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (mängija.getPilet()[i][j] == praeguneMäng.getArvud().get(Mäng.getArveLoositud())) {
+                if (mängija.getPilet()[i][j] == praeguneMäng.getArvud().get(praeguneMäng.getArveLoositud())) {
                     kontrollitudOsa[i][j] = "X";
                 }
 

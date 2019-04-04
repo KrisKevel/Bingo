@@ -3,42 +3,39 @@ import java.util.Collections;
 
 public class Mäng {
     //siin võiks genereerida arve, mis tulevad mängu ajal
-    private static ArrayList<Integer> arvud = new ArrayList<>();
-    private static int arveLoositud = -1;
-    private static boolean võitja = false;
-    private static int võitudeArvMängus = 0;
+    // muuda staatilisust
+    private ArrayList<Integer> arvud = new ArrayList<>();
+    private int arveLoositud = -1;
+    private boolean võitja = false;
+    private int võitudeArvMängus = 0;
 
-    //arvud siis mida mängu jooksul genereerima hakatakse
-    //teen sama mis lotomasina pmst
-    // Mõtlen et teeks äkki nii, et genereerib arvud, shuffleb
-    // ja siis hakkab neid ükshaaval välja printima vms, ja nagu mingi
-    //delayga, ja ss kui mängija näeb et tal mingi bingo siis peab
-    //kirjutama kuidagi"bingo" vms ja ss see kontrollib kas on
-    // ja kui ei ole saab mingi karistuse vms ,kui on võidab raha vms
-    // Ehk siis kui arvuti mängib ka, peaksime isendimeetodi tegema,
-    //et kui saab bingo siis ta declareb selle ka, ja kui keegi nn.hüüab
-    //bingo siis see 'võitja' boolean läheb True-ks ja enam arve ei prindita.
-    public static void arvuGenereerija() {
+    public void arvuGenereerija() {
+        ArrayList<Integer> arvud = new ArrayList<>();
         for (int i = 1; i < 76; i++) {
             arvud.add(i);
         }
         Collections.shuffle(arvud);
+        setArvud(arvud);
     }
 
-    public static int getArveLoositud() {
+    public void setArvud(ArrayList<Integer> arvud) {
+        this.arvud = arvud;
+    }
+
+    public int getArveLoositud() {
         return arveLoositud;
     }
 
-    public static void setArveLoositud(int arveLoositud) {
-        Mäng.arveLoositud = arveLoositud;
+    public void setArveLoositud(int arveLoositud) {
+        this.arveLoositud = arveLoositud;
     }
 
-    public static boolean isVõitja() {
+    public boolean isVõitja() {
         return võitja;
     }
 
-    public static void setVõitja(boolean võitja) {
-        Mäng.võitja = võitja;
+    public void setVõitja(boolean võitja) {
+        this.võitja = võitja;
     }
 
     public ArrayList<Integer> getArvud() {
