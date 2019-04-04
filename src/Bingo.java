@@ -8,7 +8,7 @@ public class Bingo {
 
     public static void main(String[] args) throws InterruptedException {
         Mäng mäng = new Mäng();
-        Mäng.arvuGenereerija();
+        mäng.arvuGenereerija();
         ArrayList<Integer> genereeritavadArvud = mäng.getArvud();//Genereerib loositavate nr-ite listi,
 
         Müüja müüja = new Müüja();
@@ -47,14 +47,14 @@ public class Bingo {
         System.out.println(m.toString());
 
         do {
-            Mäng.setArveLoositud(Mäng.getArveLoositud() + 1);
-            System.out.println("Loositi arv: " + genereeritavadArvud.get(Mäng.getArveLoositud()));
+            mäng.setArveLoositud(mäng.getArveLoositud() + 1);
+            System.out.println("Loositi arv: " + genereeritavadArvud.get(mäng.getArveLoositud()));
 
             for (Mängija elem : mängijad) {
                 Pilet.kontrolliNumbrit(elem, mäng);
             }
 
-            if (Mäng.getArveLoositud() > 3) {
+            if (mäng.getArveLoositud() > 3) {
                 int[] võiduKombinatsioon = {2, 5, 5};
 
                 //Siin veits muutsin, kuna muidu mäng käis kuni kõik numbrid olid välja kuulutatud
@@ -184,7 +184,7 @@ public class Bingo {
             }
 
 
-            if(Mäng.getArveLoositud() + 1 == 75){
+            if(mäng.getArveLoositud() + 1 == 75){
                 System.out.println("Kõik arvud on loositud.");
                 võitja = true;
             }
