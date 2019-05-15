@@ -8,6 +8,7 @@ public class Mäng {
     private int arveLoositud = -1;
     private boolean võitja = false;
     private int võitudeArvMängus = 0;
+    private String tulemused;
 
     public void arvuGenereerija() {
         ArrayList<Integer> arvud = new ArrayList<>();
@@ -44,5 +45,13 @@ public class Mäng {
 
     public int getVõitudeArvMängus() {
         return võitudeArvMängus;
+    }
+
+    public String getTulemused() {
+        return tulemused;
+    }
+
+    public void setTulemused(String tulemused) {
+        this.tulemused = tulemused;
     }
 }

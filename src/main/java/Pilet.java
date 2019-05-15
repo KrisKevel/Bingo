@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Pilet {
 
     private int[][] pilet;
@@ -33,17 +31,14 @@ public class Pilet {
         for (int i = 0; i < pilet.length; i++) {
             for (int j = 0; j < pilet.length; j++) {
                 if (pilet[i][j] != null && pilet[i][j].equals("X")) {
-                    if (j == 0){
-                        if (i == 0){
+                    if (j == 0) {
+                        if (i == 0) {
                             if (pilet[i][j].equals(pilet[i + 1][j + 1]) && pilet[i + 1][j + 1].equals(pilet[i + 2][j + 2]) && pilet[i + 2][j + 2].equals(pilet[i + 3][j + 3]) && pilet[i + 3][j + 3].equals(pilet[i + 4][j + 4]))
                                 võit[0] += 1;
 
                             if (pilet[i][j].equals(pilet[i + 1][j]) && pilet[i + 1][j].equals(pilet[i + 2][j]) && pilet[i + 2][j].equals(pilet[i + 3][j]) && pilet[i + 3][j].equals(pilet[i + 4][j]))
                                 võit[2] += 1;
-                        }
-
-
-                        else if (i == 4)
+                        } else if (i == 4)
                             if ((pilet[i][j].equals(pilet[i - 1][j + 1]) && pilet[i - 1][j + 1].equals(pilet[i - 2][j + 2]) && pilet[i - 2][j + 2].equals(pilet[i - 3][j + 3]) && pilet[i - 3][j + 3].equals(pilet[i - 4][j + 4])))
                                 võit[0] += 1;
 

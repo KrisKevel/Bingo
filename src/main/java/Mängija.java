@@ -41,9 +41,13 @@ public class Mängija {
         this.piletKontrollitud = piletKontrollitud;
     }
 
-    public int getPunktid() { return punktid; }
+    public int getPunktid() {
+        return punktid;
+    }
 
-    public void setPunktid(int punktid) { this.punktid = punktid; }
+    public void setPunktid(int punktid) {
+        this.punktid = punktid;
+    }
 
     @Override
     public String toString() {
