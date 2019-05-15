@@ -1,8 +1,15 @@
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -16,6 +23,8 @@ public class Peaaken {
     private Group juur;
     private Müüja müüja;
     private Lõpp lõpp = new Lõpp(pealava, juur);
+    private Teated teadeteTahvel = new Teated(new ArrayList<>());
+    private boolean onTeateid = false;
 
     private Button nuppAlgus;
     private Button nuppLõpp;
@@ -36,8 +45,7 @@ public class Peaaken {
         peaaken.setMinHeight(500.0);
         peaaken.setMinWidth(500.0);
 
-        GridPane gp = new GridPane(); //see võiks mängija pilet olla?
-        peaaken.setCenter(gp);
+
 
         peaaken.setTop(algusNupp());
 
@@ -67,7 +75,32 @@ public class Peaaken {
 
         nuppAlgus.setOnMouseClicked(event -> {
             looPiletidJaMängijad();
-            peaaken.setRight(nupud);
+            peaaken.setTop(nupud);
+            GridPane gp = new GridPane(); //see võiks mängija pilet olla?
+            gp.setMinSize(250,250);
+            gp.setPadding(new Insets(0, 10, 0, 10));
+            gp.setHgap(10);
+            gp.setVgap(10);
+            gp.setAlignment(Pos.CENTER_LEFT);
+            int[][] pilet = m.getPilet();
+            //Text Mangija = new Text("Mängija "+m.getNimi()+" pilet.");
+           // Mangija.setFont(Font.font("Arial",FontWeight.BOLD,10));
+            for(int i = 0;i<5;i++){
+                for(int j = 0;j<5;j++){
+                    Pane pane = new Pane();
+                    pane.setOnMouseReleased(e -> {
+                        if(pane.getStyle().equals("-fx-background-color: green;")){
+                            pane.setStyle("-fx-background-color: white;");
+                        }
+                        else {
+                            pane.setStyle("-fx-background-color: green;");
+                        }
+                    });
+                    pane.getChildren().addAll(new Text(Integer.toString(pilet[i][j])));
+                    gp.add(pane,i,j);
+                }
+            }
+            peaaken.setLeft(gp);
         });
 
         return nuppAlgus;
@@ -77,7 +110,13 @@ public class Peaaken {
         nuppJärgmineNumber = new Button("Järgmine number");
         nuppJärgmineNumber.setMinWidth(180);
 
-        nuppJärgmineNumber.setOnMouseClicked(event -> mängi());
+        nuppJärgmineNumber.setOnMouseClicked(event ->
+        {
+            mängi();
+
+
+
+        });
 
         return nuppJärgmineNumber;
     }
@@ -93,18 +132,21 @@ public class Peaaken {
             Pilet.kontrolliPiletit(m);
 
             if (ennekontrolliVõidud[0] < m.getMängijaVõidud()[0]) {
+                teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " sai diagonaali täis.");
                 System.out.println("Mängija " + m.getNimi() + " sai diagonaali täis.");
                 võite++;
                 m.setPunktid(m.getPunktid() + 50);
             }
 
             if (ennekontrolliVõidud[1] < m.getMängijaVõidud()[1]) {
+                teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " sai rea täis.");
                 System.out.println("Mängija " + m.getNimi() + " sai rea täis.");
                 võite++;
                 m.setPunktid(m.getPunktid() + 10);
             }
 
             if (ennekontrolliVõidud[2] < m.getMängijaVõidud()[2]) {
+                teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " sai veeru täis.");
                 System.out.println("Mängija " + m.getNimi() + " sai veeru täis.");
                 võite++;
                 m.setPunktid(m.getPunktid() + 10);
@@ -116,9 +158,12 @@ public class Peaaken {
                 double juhuArv = Math.random() * 10;
                 int juhuArvIntina = (int) juhuArv;
                 if (juhuArvIntina == 1) {
-                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas, sest mängu läbiviija ei märganud seda" +
-                            "ja punkte maha ei võetud.");
+                    teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas,\nsest mängu läbiviija ei märganud seda" +
+                            " ja punkte maha ei võetud.");
+                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas,\nsest mängu läbiviija ei märganud seda" +
+                            " ja punkte maha ei võetud.");
                 } else {
+                    teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
                     System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
 
                     if (m.getPunktid() >= 10)
@@ -153,23 +198,19 @@ public class Peaaken {
                 double juhuArv = Math.random() * 10;
                 int juhuArvIntina = (int) juhuArv;
                 if (juhuArvIntina == 1) {
-                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas, sest mängu läbiviija ei märganud seda" +
-                            "ja punkte maha ei võetud.");
+                    teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas,\nsest mängu läbiviija ei märganud seda" +
+                            " ja punkte maha ei võetud.");
+                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas,\nsest mängu läbiviija ei märganud seda" +
+                            " ja punkte maha ei võetud.");
                 } else {
+                    teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
                     System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
 
-                    juhuArv = Math.random() * 10;
-                    juhuArvIntina = (int) juhuArv;
-                    if (juhuArvIntina == 1) {
-                        System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas, sest mängu läbiviija ei märganud seda" +
-                                "ja punkte maha ei võetud.");
-                    } else {
-                        if (m.getPunktid() >= 50)
-                            m.setPunktid(m.getPunktid() - 50);
+                    if (m.getPunktid() >= 50)
+                        m.setPunktid(m.getPunktid() - 50);
 
-                        else
-                            m.setPunktid(0);
-                    }
+                    else
+                        m.setPunktid(0);
                 }
 
                 mängi();
@@ -222,6 +263,25 @@ public class Peaaken {
     public void mängi() {
 
         mäng.setArveLoositud(mäng.getArveLoositud() + 1);
+        if(teadeteTahvel.getTeadeteList().size()!=0){
+            GridPane gp2 = new GridPane();
+            gp2.setMinSize(250,250);
+            gp2.setPadding(new Insets(0, 10, 10, 10));
+            for(int i = 0;i<teadeteTahvel.getTeadeteList().size();i++){
+                gp2.add(new Text(teadeteTahvel.getTeadeteList().get(i)),0,i);
+            }
+            peaaken.setBottom(gp2);
+            teadeteTahvel.setTeadeteList(new ArrayList<>());
+        }
+        GridPane gp = new GridPane();
+        gp.setPadding(new Insets(0, 30, 0, 10));
+        gp.setHgap(10);
+        gp.setVgap(10);
+        gp.setAlignment(Pos.CENTER_RIGHT);
+        Text loositudNumber = new Text("Loositi arv: "+genereeritavadArvud.get(mäng.getArveLoositud()));
+        loositudNumber.setFont(Font.font("Arial",FontWeight.BOLD,20));
+        gp.add(loositudNumber,0,0);
+        peaaken.setRight(gp);
         System.out.println("Loositi arv: " + genereeritavadArvud.get(mäng.getArveLoositud()));
 
         for (Mängija elem : mängijad) {
@@ -235,21 +295,25 @@ public class Peaaken {
                 Pilet.kontrolliPiletit(elem);
 
                 if (ennekontrolliVõidud[0] < elem.getMängijaVõidud()[0]) {
+                    teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " sai diagonaali täis.");
                     System.out.println("Mängija " + elem.getNimi() + " sai diagonaali täis.");
                     elem.setPunktid(elem.getPunktid() + 50);
                 }
 
                 if (ennekontrolliVõidud[1] < elem.getMängijaVõidud()[1]) {
+                    teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " sai rea täis.");
                     System.out.println("Mängija " + elem.getNimi() + " sai rea täis.");
                     elem.setPunktid(elem.getPunktid() + 10);
                 }
 
                 if (ennekontrolliVõidud[2] < elem.getMängijaVõidud()[2]) {
+                    teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " sai veeru täis.");
                     System.out.println("Mängija " + elem.getNimi() + " sai veeru täis.");
                     elem.setPunktid(elem.getPunktid() + 10);
                 }
 
                 if (elem.getMängijaVõidud()[1] == 5 || elem.getMängijaVõidud()[2] == 5) {
+                    teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " võitis!");
                     System.out.println("Mängija " + elem.getNimi() + " võitis!");
                     elem.setPunktid(elem.getPunktid() + 10000);
                     lõpetaMängu();

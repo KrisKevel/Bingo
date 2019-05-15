@@ -7,6 +7,10 @@ public class Pilet {
         this.pilet = pilet;
     }
 
+    public int[][] getPilet() {
+        return pilet;
+    }
+
     public static void kontrolliNumbrit(Mängija mängija, Mäng praeguneMäng) {
         String[][] kontrollitudOsa = mängija.getPiletKontrollitud();
 

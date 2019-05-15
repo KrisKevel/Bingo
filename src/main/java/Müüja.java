@@ -50,7 +50,11 @@ public class Müüja {
         Button nuppEdasi = new Button("Mängi!");
 
         nuppEdasi.setOnMouseClicked(event -> {
+            if(getVastus().equals("")){
+                throw new IllegalArgumentException("Nimi ei saa olla tühi");
+            }
                     pea = new Peaaken(pealava, juur, this);
+            //pea.looPiletidJaMängijad();
                     juur.getChildren().add(pea.getPeaaken());
                     pea.setJuur(juur);
                     pea.getPeaaken().setVisible(true);
