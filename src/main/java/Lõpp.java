@@ -1,3 +1,4 @@
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
@@ -38,6 +39,7 @@ public class Lõpp {
         bp.setCenter(bp2);
 
         bp2.setCenter(uuestiNupp());
+        bp2.setRight(väljuJaSalvesta());
 
         return lõpp;
     }
@@ -54,6 +56,18 @@ public class Lõpp {
         });
 
         return nuppUuesti;
+    }
+
+    public Button väljuJaSalvesta(){
+        nuppVälju = new Button("Välju ja salvesta");
+
+        nuppVälju.setOnMouseClicked(event -> {
+
+            Platform.exit();
+
+        });
+
+        return nuppVälju;
     }
 
 

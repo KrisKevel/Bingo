@@ -96,7 +96,7 @@ public class Peaaken {
                             pane.setStyle("-fx-background-color: green;");
                         }
                     });
-                    pane.getChildren().addAll(new Text(Integer.toString(pilet[i][j])));
+                    pane.getChildren().addAll(new Text(Integer.toString(pilet[j][i])));
                     gp.add(pane,i,j);
                 }
             }
@@ -113,9 +113,6 @@ public class Peaaken {
         nuppJärgmineNumber.setOnMouseClicked(event ->
         {
             mängi();
-
-
-
         });
 
         return nuppJärgmineNumber;
@@ -133,21 +130,18 @@ public class Peaaken {
 
             if (ennekontrolliVõidud[0] < m.getMängijaVõidud()[0]) {
                 teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " sai diagonaali täis.");
-                System.out.println("Mängija " + m.getNimi() + " sai diagonaali täis.");
                 võite++;
                 m.setPunktid(m.getPunktid() + 50);
             }
 
             if (ennekontrolliVõidud[1] < m.getMängijaVõidud()[1]) {
                 teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " sai rea täis.");
-                System.out.println("Mängija " + m.getNimi() + " sai rea täis.");
                 võite++;
                 m.setPunktid(m.getPunktid() + 10);
             }
 
             if (ennekontrolliVõidud[2] < m.getMängijaVõidud()[2]) {
                 teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " sai veeru täis.");
-                System.out.println("Mängija " + m.getNimi() + " sai veeru täis.");
                 võite++;
                 m.setPunktid(m.getPunktid() + 10);
             }
@@ -160,11 +154,9 @@ public class Peaaken {
                 if (juhuArvIntina == 1) {
                     teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas,\nsest mängu läbiviija ei märganud seda" +
                             " ja punkte maha ei võetud.");
-                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas,\nsest mängu läbiviija ei märganud seda" +
-                            " ja punkte maha ei võetud.");
+
                 } else {
                     teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
-                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
 
                     if (m.getPunktid() >= 10)
                         m.setPunktid(m.getPunktid() - 10);
@@ -188,7 +180,6 @@ public class Peaaken {
         nuppBingo.setOnMouseClicked(event -> {
             Pilet.kontrolliPiletit(m);
             if (m.getMängijaVõidud()[1] == 5 || m.getMängijaVõidud()[2] == 5) {
-                System.out.println("Mängija " + m.getNimi() + " võitis!");
                 m.setPunktid(m.getPunktid() + 10000);
                 lõpetaMängu();
 
@@ -200,11 +191,9 @@ public class Peaaken {
                 if (juhuArvIntina == 1) {
                     teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas,\nsest mängu läbiviija ei märganud seda" +
                             " ja punkte maha ei võetud.");
-                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, aga vedas,\nsest mängu läbiviija ei märganud seda" +
-                            " ja punkte maha ei võetud.");
+
                 } else {
                     teadeteTahvel.lisaTeade("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
-                    System.out.println("Mängija " + m.getNimi() + " kuulutas Bingo liiga vara, kaotab punkte.");
 
                     if (m.getPunktid() >= 50)
                         m.setPunktid(m.getPunktid() - 50);
@@ -296,25 +285,20 @@ public class Peaaken {
 
                 if (ennekontrolliVõidud[0] < elem.getMängijaVõidud()[0]) {
                     teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " sai diagonaali täis.");
-                    System.out.println("Mängija " + elem.getNimi() + " sai diagonaali täis.");
                     elem.setPunktid(elem.getPunktid() + 50);
                 }
 
                 if (ennekontrolliVõidud[1] < elem.getMängijaVõidud()[1]) {
-                    teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " sai rea täis.");
-                    System.out.println("Mängija " + elem.getNimi() + " sai rea täis.");
-                    elem.setPunktid(elem.getPunktid() + 10);
+                    teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " sai rea täis");
                 }
 
                 if (ennekontrolliVõidud[2] < elem.getMängijaVõidud()[2]) {
                     teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " sai veeru täis.");
-                    System.out.println("Mängija " + elem.getNimi() + " sai veeru täis.");
                     elem.setPunktid(elem.getPunktid() + 10);
                 }
 
                 if (elem.getMängijaVõidud()[1] == 5 || elem.getMängijaVõidud()[2] == 5) {
                     teadeteTahvel.lisaTeade("Mängija " + elem.getNimi() + " võitis!");
-                    System.out.println("Mängija " + elem.getNimi() + " võitis!");
                     elem.setPunktid(elem.getPunktid() + 10000);
                     lõpetaMängu();
                 }
