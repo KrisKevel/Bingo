@@ -13,16 +13,19 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Peaaken {
 
-    private BorderPane peaaken = loomePA();
     private Stage pealava;
     private Group juur;
     private Müüja müüja;
     private Lõpp lõpp = new Lõpp(pealava, juur);
+    private BorderPane peaaken = loomePA();
     private Teated teadeteTahvel = new Teated(new ArrayList<>());
     private boolean onTeateid = false;
 
@@ -48,6 +51,26 @@ public class Peaaken {
 
 
         peaaken.setTop(algusNupp());
+        if(new File("SalvestatudTulemused.dat").isFile()){
+            try(DataInputStream dis = new DataInputStream(new FileInputStream("SalvestatudTulemused.dat"))){
+                int mituSisenditOn = dis.readInt();
+                Map<String,Integer> loetudTulemused = new HashMap<>();
+                for(int i = 0;i<mituSisenditOn;i++){
+                    String nimi = dis.readUTF();
+                    int punktid = dis.readInt();
+                    loetudTulemused.put(nimi,punktid);
+                }
+                if (lõpp == null) {
+                    System.out.println("Joubi");
+                }
+                lõpp.setTulemusedSalvestamiseks(loetudTulemused);
+                peaaken.setTop(laeJaMängiNupp());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         nupud = new VBox();
         nupud.setPrefWidth(180);
@@ -68,6 +91,45 @@ public class Peaaken {
         });
 
         return nuppLõpp;
+    }
+    public Button laeJaMängiNupp(){
+        nuppAlgus = new Button("Lae tulemused ja alusta!!");
+
+        nuppAlgus.setOnMouseClicked(event -> {
+            looPiletidJaMängijad();
+            peaaken.setTop(nupud);
+            GridPane gp = new GridPane(); //see võiks mängija pilet olla?
+            gp.setMinSize(250,250);
+            gp.setPadding(new Insets(0, 10, 0, 10));
+            gp.setHgap(10);
+            gp.setVgap(10);
+            gp.setAlignment(Pos.CENTER_LEFT);
+            int[][] pilet = m.getPilet();
+            //Text Mangija = new Text("Mängija "+m.getNimi()+" pilet.");
+            // Mangija.setFont(Font.font("Arial",FontWeight.BOLD,10));
+            for(int i = 0;i<5;i++){
+                for(int j = 0;j<5;j++){
+                    Pane pane = new Pane();
+                    pane.setOnMouseReleased(e -> {
+                        if(pane.getStyle().equals("-fx-background-color: green;")){
+                            pane.setStyle("-fx-background-color: white;");
+                        }
+                        else {
+                            pane.setStyle("-fx-background-color: green;");
+                        }
+                    });
+                    pane.getChildren().addAll(new Text(Integer.toString(pilet[j][i])));
+                    gp.add(pane,i,j);
+                }
+            }
+            for(Mängija mängija:mängijad){
+                mängija.setPunktid(lõpp.getTulemusedSalvestamiseks().get(mängija.getNimi()));
+            }
+            peaaken.setLeft(gp);
+        });
+
+        return nuppAlgus;
+
     }
 
     public Button algusNupp() {
@@ -252,16 +314,19 @@ public class Peaaken {
     public void mängi() {
 
         mäng.setArveLoositud(mäng.getArveLoositud() + 1);
+        GridPane gp2 = new GridPane();
         if(teadeteTahvel.getTeadeteList().size()!=0){
-            GridPane gp2 = new GridPane();
+            gp2.setVisible(true);
             gp2.setMinSize(250,250);
             gp2.setPadding(new Insets(0, 10, 10, 10));
             for(int i = 0;i<teadeteTahvel.getTeadeteList().size();i++){
                 gp2.add(new Text(teadeteTahvel.getTeadeteList().get(i)),0,i);
             }
-            peaaken.setBottom(gp2);
             teadeteTahvel.setTeadeteList(new ArrayList<>());
+            peaaken.setBottom(gp2);
         }
+        else gp2.setVisible(false);
+
         GridPane gp = new GridPane();
         gp.setPadding(new Insets(0, 30, 0, 10));
         gp.setHgap(10);
@@ -329,12 +394,13 @@ public class Peaaken {
 
 
     public void võidud(List<Mängija> mängijad, Lõpp lõpp) {
+        Map<String,Integer> tulemusedSalvestamiseks = new HashMap<>();
         String tulemused = m.getNimi() + " võitis " + m.getPunktid() + " eurot." + '\n';
-
         for (Mängija mängija : mängijad) {
+            tulemusedSalvestamiseks.put(mängija.getNimi(),mängija.getPunktid());
             tulemused += (mängija.getNimi() + " võitis " + mängija.getPunktid() + " eurot." + '\n');
         }
-
+        lõpp.setTulemusedSalvestamiseks(tulemusedSalvestamiseks);
         lõpp.setTulemused(tulemused);
     }
 

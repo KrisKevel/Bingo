@@ -5,10 +5,18 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Lõpp {
 
     private BorderPane lõpp = new BorderPane();
     private String tulemused;
+    private Map<String,Integer> tulemusedSalvestamiseks = new HashMap<>();
     private Button nuppUuesti;
     private Button nuppVälju;
     private Müüja m;
@@ -21,7 +29,15 @@ public class Lõpp {
         this.juur = juur;
     }
 
-    public BorderPane loomeL() {
+    public Map<String, Integer> getTulemusedSalvestamiseks() {
+        return tulemusedSalvestamiseks;
+    }
+
+    public void setTulemusedSalvestamiseks(Map<String, Integer> tulemusedSalvestamiseks) {
+        this.tulemusedSalvestamiseks = tulemusedSalvestamiseks;
+    }
+
+    public BorderPane loomeL(){
         lõpp.setMinHeight(500.0);
         lõpp.setMinWidth(500.0);
 
@@ -62,6 +78,17 @@ public class Lõpp {
         nuppVälju = new Button("Välju ja salvesta");
 
         nuppVälju.setOnMouseClicked(event -> {
+            try(DataOutputStream dos = new DataOutputStream(new FileOutputStream("SalvestatudTulemused.dat"))){
+                dos.writeInt(tulemusedSalvestamiseks.size());
+                for(String key:tulemusedSalvestamiseks.keySet()){
+                    dos.writeUTF(key);
+                    dos.writeInt(tulemusedSalvestamiseks.get(key));
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             Platform.exit();
 
@@ -71,7 +98,7 @@ public class Lõpp {
     }
 
 
-    public BorderPane getLõpp() {
+    public BorderPane getLõpp(){
         return lõpp;
     }
 

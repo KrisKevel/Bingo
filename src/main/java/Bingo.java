@@ -25,7 +25,7 @@ public class Bingo extends Application {
     }
 
 
-    public void start(Stage pealava) throws InterruptedException {
+    public void start(Stage pealava) throws Exception {
         Group juur = getGroup(pealava);
 
         Scene stseen = new Scene(juur, 500, 500);
