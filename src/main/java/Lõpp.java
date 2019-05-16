@@ -5,10 +5,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,6 +61,18 @@ public class Lõpp {
         nuppUuesti = new Button("Proovin uuesti");
 
         nuppUuesti.setOnMouseClicked(event -> {
+            try(DataOutputStream dos = new DataOutputStream(new FileOutputStream("uuesti.dat"))){
+                dos.writeInt(tulemusedSalvestamiseks.size());
+                for(String key:tulemusedSalvestamiseks.keySet()){
+                    dos.writeUTF(key);
+                    dos.writeInt(tulemusedSalvestamiseks.get(key));
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             m = new Müüja(pealava, juur);
             juur.getChildren().add(m.getKirjelduseAken());
             m.setJuur(juur);
@@ -74,8 +83,14 @@ public class Lõpp {
         return nuppUuesti;
     }
 
+
     public Button väljuJaSalvesta(){
         nuppVälju = new Button("Välju ja salvesta");
+
+        File f = new File("uuesti.dat");
+        if(f.isFile()){
+            f.delete();
+        }
 
         nuppVälju.setOnMouseClicked(event -> {
             try(DataOutputStream dos = new DataOutputStream(new FileOutputStream("SalvestatudTulemused.dat"))){
@@ -110,4 +125,5 @@ public class Lõpp {
     public void setJuur(Group juur) {
         this.juur = juur;
     }
+
 }

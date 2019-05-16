@@ -1,9 +1,7 @@
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -52,7 +50,13 @@ public class Peaaken {
 
         peaaken.setTop(algusNupp());
         if(new File("SalvestatudTulemused.dat").isFile()){
-            try(DataInputStream dis = new DataInputStream(new FileInputStream("SalvestatudTulemused.dat"))){
+            String f = "SalvestatudTulemused.dat";
+            File ajutineFail = new File("uuesti.dat");
+            if(ajutineFail.isFile()){
+                ajutineFail.deleteOnExit();
+                f = "uuesti.dat";
+            }
+            try(DataInputStream dis = new DataInputStream(new FileInputStream(f))){
                 int mituSisenditOn = dis.readInt();
                 Map<String,Integer> loetudTulemused = new HashMap<>();
                 for(int i = 0;i<mituSisenditOn;i++){
@@ -92,13 +96,15 @@ public class Peaaken {
 
         return nuppLõpp;
     }
+
+
     public Button laeJaMängiNupp(){
-        nuppAlgus = new Button("Lae tulemused ja alusta!!");
+        nuppAlgus = new Button("Lae tulemused ja alusta!");
 
         nuppAlgus.setOnMouseClicked(event -> {
             looPiletidJaMängijad();
             peaaken.setTop(nupud);
-            GridPane gp = new GridPane(); //see võiks mängija pilet olla?
+            GridPane gp = new GridPane();
             gp.setMinSize(250,250);
             gp.setPadding(new Insets(0, 10, 0, 10));
             gp.setHgap(10);
@@ -132,13 +138,16 @@ public class Peaaken {
 
     }
 
+
+
+
     public Button algusNupp() {
         nuppAlgus = new Button("Alusta mänguga!");
 
         nuppAlgus.setOnMouseClicked(event -> {
             looPiletidJaMängijad();
             peaaken.setTop(nupud);
-            GridPane gp = new GridPane(); //see võiks mängija pilet olla?
+            GridPane gp = new GridPane();
             gp.setMinSize(250,250);
             gp.setPadding(new Insets(0, 10, 0, 10));
             gp.setHgap(10);
@@ -167,6 +176,9 @@ public class Peaaken {
 
         return nuppAlgus;
     }
+
+
+
 
     public Button järgmineNumber() {
         nuppJärgmineNumber = new Button("Järgmine number");
